@@ -1,0 +1,17 @@
+[package]
+name = "bucky-raw-codec-derive"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+repository = "https://github.com/buckyos/bucky-raw-codec.git"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+syn = {version = "1.0", features = ["visit"]}
+quote = "1.0"
+proc-macro2 = "1.0"
+regex = "1.5"
+
+[lib]
+proc-macro = true
