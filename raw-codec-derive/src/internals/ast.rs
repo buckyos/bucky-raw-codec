@@ -118,7 +118,7 @@ impl<'a> Container<'a> {
                 Data::Struct(style, fields)
             }
             syn::Data::Union(_) => {
-                cx.error_spanned_by(item, "cyfs does not support derive for unions");
+                cx.error_spanned_by(item, "bucky does not support derive for unions");
                 return None;
             }
         };

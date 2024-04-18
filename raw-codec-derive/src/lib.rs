@@ -21,7 +21,7 @@ mod en;
 mod try_;
 mod protobuf_codec;
 
-#[proc_macro_derive(RawEncode, attributes(cyfs))]
+#[proc_macro_derive(RawEncode, attributes(bucky))]
 pub fn derive_raw_encode_fn(input: TokenStream) -> TokenStream {
     let input = syn::parse_macro_input!(input as syn::DeriveInput);
     en::expand_derive_raw_encode(&input)
@@ -29,7 +29,7 @@ pub fn derive_raw_encode_fn(input: TokenStream) -> TokenStream {
         .into()
 }
 
-#[proc_macro_derive(RawDecode, attributes(cyfs))]
+#[proc_macro_derive(RawDecode, attributes(bucky))]
 pub fn derive_raw_decode_fn(input: TokenStream) -> TokenStream {
     let input = syn::parse_macro_input!(input as syn::DeriveInput);
     de::expand_derive_raw_decode(&input)
@@ -37,7 +37,7 @@ pub fn derive_raw_decode_fn(input: TokenStream) -> TokenStream {
         .into()
 }
 
-#[proc_macro_derive(ProtobufTransform, attributes(cyfs_protobuf_type))]
+#[proc_macro_derive(ProtobufTransform, attributes(bucky_protobuf_type))]
 pub fn derive_protobuf_try_from_fn(input: TokenStream) -> TokenStream {
     let input = syn::parse_macro_input!(input as syn::DeriveInput);
     derive_protobuf_try_from_fn_impl(input).unwrap_or_else(|err| {
@@ -45,7 +45,7 @@ pub fn derive_protobuf_try_from_fn(input: TokenStream) -> TokenStream {
     })
 }
 
-#[proc_macro_derive(ProtobufTransformType, attributes(cyfs_protobuf_type))]
+#[proc_macro_derive(ProtobufTransformType, attributes(bucky_protobuf_type))]
 pub fn derive_protobuf_type_fn(input: TokenStream) -> TokenStream {
     let input = syn::parse_macro_input!(input as syn::DeriveInput);
     derive_protobuf_transform_type_fn_impl(input).unwrap_or_else(|err| {
@@ -53,7 +53,7 @@ pub fn derive_protobuf_type_fn(input: TokenStream) -> TokenStream {
     })
 }
 
-#[proc_macro_derive(ProtobufEncode, attributes(cyfs_protobuf_type))]
+#[proc_macro_derive(ProtobufEncode, attributes(bucky_protobuf_type))]
 pub fn derive_proto_encode_fn(input: TokenStream) -> TokenStream {
     let input = syn::parse_macro_input!(input as syn::DeriveInput);
     derive_proto_encode_fn_impl(input).unwrap_or_else(|err| {
@@ -61,7 +61,7 @@ pub fn derive_proto_encode_fn(input: TokenStream) -> TokenStream {
     })
 }
 
-#[proc_macro_derive(ProtobufDecode, attributes(cyfs_protobuf_type))]
+#[proc_macro_derive(ProtobufDecode, attributes(bucky_protobuf_type))]
 pub fn derive_proto_decode_fn(input: TokenStream) -> TokenStream {
     let input = syn::parse_macro_input!(input as syn::DeriveInput);
     derive_proto_decode_fn_impl(input).unwrap_or_else(|err| {

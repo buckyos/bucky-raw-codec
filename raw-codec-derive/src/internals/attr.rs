@@ -318,16 +318,16 @@ impl Container {
                         }
                         syn::Fields::Unnamed(_) | syn::Fields::Unit => cx.error_spanned_by(
                             fields,
-                            "#[cyfs(default)] can only be used on structs with named fields",
+                            "#[bucky(default)] can only be used on structs with named fields",
                         ),
                     },
                     syn::Data::Enum(syn::DataEnum { enum_token, .. }) => cx.error_spanned_by(
                         enum_token,
-                        "#[cyfs(default)] can only be used on structs with named fields",
+                        "#[bucky(default)] can only be used on structs with named fields",
                     ),
                     syn::Data::Union(syn::DataUnion { union_token, .. }) => cx.error_spanned_by(
                         union_token,
-                        "#[cyfs(default)] can only be used on structs with named fields",
+                        "#[bucky(default)] can only be used on structs with named fields",
                     ),
                 },
 
@@ -343,20 +343,20 @@ impl Container {
                                     syn::Fields::Unnamed(_) | syn::Fields::Unit => cx
                                         .error_spanned_by(
                                             fields,
-                                            "#[cyfs(default = \"...\")] can only be used on structs with named fields",
+                                            "#[bucky(default = \"...\")] can only be used on structs with named fields",
                                         ),
                                 }
                             }
                             syn::Data::Enum(syn::DataEnum { enum_token, .. }) => cx
                                 .error_spanned_by(
                                     enum_token,
-                                    "#[cyfs(default = \"...\")] can only be used on structs with named fields",
+                                    "#[bucky(default = \"...\")] can only be used on structs with named fields",
                                 ),
                             syn::Data::Union(syn::DataUnion {
                                 union_token, ..
                             }) => cx.error_spanned_by(
                                 union_token,
-                                "#[cyfs(default = \"...\")] can only be used on structs with named fields",
+                                "#[bucky(default = \"...\")] can only be used on structs with named fields",
                             ),
                         }
                     }
@@ -386,13 +386,13 @@ impl Container {
                     syn::Data::Struct(syn::DataStruct { struct_token, .. }) => {
                         cx.error_spanned_by(
                             struct_token,
-                            "#[cyfs(untagged)] can only be used on enums",
+                            "#[bucky(untagged)] can only be used on enums",
                         );
                     }
                     syn::Data::Union(syn::DataUnion { union_token, .. }) => {
                         cx.error_spanned_by(
                             union_token,
-                            "#[cyfs(untagged)] can only be used on enums",
+                            "#[bucky(untagged)] can only be used on enums",
                         );
                     }
                 },
@@ -415,14 +415,14 @@ impl Container {
                                 syn::Fields::Unnamed(_) | syn::Fields::Unit => {
                                     cx.error_spanned_by(
                                             fields,
-                                            "#[cyfs(tag = \"...\")] can only be used on enums and structs with named fields",
+                                            "#[bucky(tag = \"...\")] can only be used on enums and structs with named fields",
                                         );
                                 }
                             },
                             syn::Data::Union(syn::DataUnion { union_token, .. }) => {
                                 cx.error_spanned_by(
                                     union_token,
-                                    "#[cyfs(tag = \"...\")] can only be used on enums and structs with named fields",
+                                    "#[bucky(tag = \"...\")] can only be used on enums and structs with named fields",
                                 );
                             }
                         }
@@ -439,13 +439,13 @@ impl Container {
                             syn::Data::Struct(syn::DataStruct { struct_token, .. }) => {
                                 cx.error_spanned_by(
                                     struct_token,
-                                    "#[cyfs(content = \"...\")] can only be used on enums",
+                                    "#[bucky(content = \"...\")] can only be used on enums",
                                 );
                             }
                             syn::Data::Union(syn::DataUnion { union_token, .. }) => {
                                 cx.error_spanned_by(
                                     union_token,
-                                    "#[cyfs(content = \"...\")] can only be used on enums",
+                                    "#[bucky(content = \"...\")] can only be used on enums",
                                 );
                             }
                         }
@@ -507,7 +507,7 @@ impl Container {
                 }
 
                 Lit(lit) => {
-                    cx.error_spanned_by(lit, "unexpected literal in cyfs container attribute");
+                    cx.error_spanned_by(lit, "unexpected literal in bucky container attribute");
                 }
             }
         }
@@ -1051,7 +1051,7 @@ impl Field {
                 // }
                 //
                 Lit(lit) => {
-                    cx.error_spanned_by(lit, "unexpected literal in cyfs field attribute");
+                    cx.error_spanned_by(lit, "unexpected literal in bucky field attribute");
                 }
                 _ => {}
             }
@@ -1282,7 +1282,7 @@ pub fn get_cyfs_meta_items(cx: &Ctxt, attr: &syn::Attribute) -> Result<Vec<syn::
     match attr.parse_meta() {
         Ok(List(meta)) => Ok(meta.nested.into_iter().collect()),
         Ok(other) => {
-            cx.error_spanned_by(other, "expected #[cyfs(...)]");
+            cx.error_spanned_by(other, "expected #[bucky(...)]");
             Err(())
         }
         Err(err) => {

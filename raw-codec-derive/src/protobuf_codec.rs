@@ -98,7 +98,7 @@ impl FieldEx for Field {
 
 pub fn get_proto_type(input: &DeriveInput) -> Result<TokenStream> {
     for attr in input.attrs.iter() {
-        if !attr.path.is_ident("cyfs_protobuf_type") {
+        if !attr.path.is_ident("bucky_protobuf_type") {
             continue;
         } else {
             match attr.parse_meta() {
@@ -150,7 +150,7 @@ pub fn get_proto_type(input: &DeriveInput) -> Result<TokenStream> {
     }
     return Err(syn::Error::new(
         input.span(),
-        format!("not find cyfs_protobuf_type attribute"),
+        format!("not find bucky_protobuf_type attribute"),
     ));
 }
 
