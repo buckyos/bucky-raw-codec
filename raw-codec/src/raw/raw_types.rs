@@ -2235,6 +2235,42 @@ impl<'de, T: RawEncode + RawDecode<'de>> RawDecode<'de> for Range<T> {
     }
 }
 
+impl RawFixedBytes for str {
+    fn raw_min_bytes() -> Option<usize> {
+        u16::raw_bytes()
+    }
+}
+
+impl RawEncode for str {
+    fn raw_measure(&self, _purpose: &Option<RawEncodePurpose>) -> CodecResult<usize> {
+        Ok(u16::raw_bytes().unwrap() + self.len())
+    }
+    fn raw_encode<'a>(
+        &self,
+        buf: &'a mut [u8],
+        purpose: &Option<RawEncodePurpose>,
+    ) -> CodecResult<&'a mut [u8]> {
+        let size = self.raw_measure(purpose).unwrap();
+        if buf.len() < size {
+            return Err(CodecError::new(
+                CodecErrorCode::OutOfLimit,
+                "[raw_encode] not enough buffer for str",
+            ));
+        }
+
+        let buf = (self.len() as u16).raw_encode(buf, purpose)?;
+        if self.len() == 0 {
+            Ok(buf)
+        } else {
+            unsafe {
+                std::ptr::copy::<u8>(self.as_ptr() as *mut u8, buf.as_mut_ptr(), self.len());
+            }
+            println!("buf len {}, self len {}", buf.len(), self.len());
+            Ok(&mut buf[self.len()..])
+        }
+    }
+}
+
 #[cfg(test)]
 mod raw_codec_test {
     use crate::*;
