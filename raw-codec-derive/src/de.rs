@@ -31,14 +31,14 @@ pub fn expand_derive_raw_decode(input: &syn::DeriveInput) -> Result<TokenStream,
     let impl_block = quote! {
         #[automatically_derived]
         #[allow(non_snake_case)]
-        fn #call_name<'a, T: RawDecode<'a>>(__buf__: &'a [u8]) -> CodecResult<(T, &'a [u8])> {
+        fn #call_name<'a, T: RawDecode<'a>>(__buf__: &'a [u8]) -> bucky_raw_codec::CodecResult<(T, &'a [u8])> {
             T::raw_decode(__buf__)
         }
 
         #[automatically_derived]
         #[allow(non_snake_case)]
         impl #de_impl_generics RawDecode<#delife> for #ident #ty_generics #where_clause {
-            fn raw_decode(__buf__: &#delife [u8]) -> CodecResult<(Self, &#delife [u8])>
+            fn raw_decode(__buf__: &#delife [u8]) -> bucky_raw_codec::CodecResult<(Self, &#delife [u8])>
             {
                 #body
             }

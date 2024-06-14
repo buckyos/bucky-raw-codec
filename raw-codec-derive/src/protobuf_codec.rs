@@ -211,7 +211,7 @@ pub fn derive_protobuf_try_from_fn_impl(
         #[automatically_derived]
         #[allow(non_snake_case)]
         impl bucky_raw_codec::ProtobufTransform<&#ident> for #proto_type {
-            fn transform(_value_: &#ident) -> CodecResult<Self> {
+            fn transform(_value_: &#ident) -> bucky_raw_codec::CodecResult<Self> {
                 Ok(#proto_try_from_obj_ref_body)
             }
         }
@@ -219,7 +219,7 @@ pub fn derive_protobuf_try_from_fn_impl(
         #[automatically_derived]
         #[allow(non_snake_case)]
         impl bucky_raw_codec::ProtobufTransform<&#ident> for Option<#proto_type> {
-            fn transform(_value_: &#ident) -> CodecResult<Self> {
+            fn transform(_value_: &#ident) -> bucky_raw_codec::CodecResult<Self> {
                 Ok(Some(bucky_raw_codec::ProtobufTransform::transform(_value_)?))
             }
         }
@@ -227,7 +227,7 @@ pub fn derive_protobuf_try_from_fn_impl(
         #[automatically_derived]
         #[allow(non_snake_case)]
         impl bucky_raw_codec::ProtobufTransform<#proto_type> for #ident {
-            fn transform(_value_: #proto_type) -> CodecResult<Self> {
+            fn transform(_value_: #proto_type) -> bucky_raw_codec::CodecResult<Self> {
                 Ok(#obj_try_from_proto_body)
             }
         }
@@ -235,7 +235,7 @@ pub fn derive_protobuf_try_from_fn_impl(
         #[automatically_derived]
         #[allow(non_snake_case)]
         impl bucky_raw_codec::ProtobufTransform<Option<#proto_type>> for #ident {
-            fn transform(_value_: Option<#proto_type>) -> CodecResult<Self> {
+            fn transform(_value_: Option<#proto_type>) -> bucky_raw_codec::CodecResult<Self> {
                 match _value_ {
                     Some(_value_) => {
                         Ok(bucky_raw_codec::ProtobufTransform::transform(_value_)?)
@@ -259,7 +259,7 @@ pub fn derive_protobuf_transform_type_fn_impl(
         #[automatically_derived]
         #[allow(non_snake_case)]
         impl bucky_raw_codec::ProtobufTransform<&#ident> for Option<#proto_type> {
-            fn transform(_value_: &#ident) -> CodecResult<Self> {
+            fn transform(_value_: &#ident) -> bucky_raw_codec::CodecResult<Self> {
                 Ok(Some(bucky_raw_codec::ProtobufTransform::transform(_value_)?))
             }
         }
@@ -267,7 +267,7 @@ pub fn derive_protobuf_transform_type_fn_impl(
         #[automatically_derived]
         #[allow(non_snake_case)]
         impl bucky_raw_codec::ProtobufTransform<Option<#proto_type>> for #ident {
-            fn transform(_value_: Option<#proto_type>) -> CodecResult<Self> {
+            fn transform(_value_: Option<#proto_type>) -> bucky_raw_codec::CodecResult<Self> {
                 match _value_ {
                     Some(_value_) => {
                         Ok(bucky_raw_codec::ProtobufTransform::transform(_value_)?)

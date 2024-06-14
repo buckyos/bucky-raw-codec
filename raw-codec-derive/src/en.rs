@@ -32,12 +32,12 @@ pub fn expand_derive_raw_encode(input: &syn::DeriveInput) -> Result<TokenStream,
         #[automatically_derived]
         #[allow(non_snake_case)]
         impl #impl_generics RawEncode for #ident #ty_generics #where_clause {
-            fn raw_encode<'__de__>(&self, __buf__: &'__de__ mut [u8], __purpose__: &Option<RawEncodePurpose>) -> CodecResult<&'__de__ mut [u8]>
+            fn raw_encode<'__de__>(&self, __buf__: &'__de__ mut [u8], __purpose__: &Option<RawEncodePurpose>) -> bucky_raw_codec::CodecResult<&'__de__ mut [u8]>
             {
                 #body
             }
 
-            fn raw_measure(&self, __purpose__: &Option<RawEncodePurpose>) -> CodecResult<usize> {
+            fn raw_measure(&self, __purpose__: &Option<RawEncodePurpose>) -> bucky_raw_codec::CodecResult<usize> {
                 #measure_body
             }
         };
