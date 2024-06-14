@@ -289,7 +289,7 @@ pub fn derive_proto_encode_fn_impl(input: syn::DeriveInput) -> Result<proc_macro
         #[automatically_derived]
         #[allow(non_snake_case)]
         impl #impl_generics bucky_raw_codec::RawEncode for #ident #ty_generics #where_clause {
-            fn raw_encode<'__de__>(&self, __buf__: &'__de__ mut [u8], __purpose__: &Option<RawEncodePurpose>) -> bucky_raw_codec::CodecResult<&'__de__ mut [u8]> {
+            fn raw_encode<'__de__>(&self, __buf__: &'__de__ mut [u8], __purpose__: &Option<bucky_raw_codec::RawEncodePurpose>) -> bucky_raw_codec::CodecResult<&'__de__ mut [u8]> {
                 use prost::Message;
                 use prost::bytes::BufMut;
                 let proto_obj: #proto_type = bucky_raw_codec::ProtobufTransform::transform(self)?;
@@ -306,7 +306,7 @@ pub fn derive_proto_encode_fn_impl(input: syn::DeriveInput) -> Result<proc_macro
                 Ok(tmp_buf)
             }
 
-            fn raw_measure(&self, __purpose__: &Option<RawEncodePurpose>) -> bucky_raw_codec::CodecResult<usize> {
+            fn raw_measure(&self, __purpose__: &Option<bucky_raw_codec::RawEncodePurpose>) -> bucky_raw_codec::CodecResult<usize> {
                 use prost::Message;
                 let proto_obj: #proto_type = bucky_raw_codec::ProtobufTransform::transform(self)?;
                 Ok(proto_obj.encoded_len())
@@ -324,11 +324,11 @@ pub fn derive_proto_encode_empty_fn_impl(input: syn::DeriveInput) -> Result<proc
         #[automatically_derived]
         #[allow(non_snake_case)]
         impl #impl_generics bucky_raw_codec::RawEncode for #ident #ty_generics #where_clause {
-            fn raw_encode<'__de__>(&self, __buf__: &'__de__ mut [u8], __purpose__: &Option<RawEncodePurpose>) -> bucky_raw_codec::CodecResult<&'__de__ mut [u8]> {
+            fn raw_encode<'__de__>(&self, __buf__: &'__de__ mut [u8], __purpose__: &Option<bucky_raw_codec::RawEncodePurpose>) -> bucky_raw_codec::CodecResult<&'__de__ mut [u8]> {
                 Ok(__buf__)
             }
 
-            fn raw_measure(&self, __purpose__: &Option<RawEncodePurpose>) -> bucky_raw_codec::CodecResult<usize> {
+            fn raw_measure(&self, __purpose__: &Option<bucky_raw_codec::RawEncodePurpose>) -> bucky_raw_codec::CodecResult<usize> {
                 Ok(0)
             }
         }
