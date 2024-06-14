@@ -494,7 +494,7 @@ fn obj_try_from_proto_encode_enum(
 
     if proto_type.to_string() == "i32".to_string() {
         token_list.push(quote! {
-                    _ => return Err(bucky_raw_codec::CodecError::new(CodecErrorCode::InvalidInput, format!("transform {} to {} failed.", _value_, stringify!(#enum_name))))
+                    _ => return Err(bucky_raw_codec::CodecError::new(bucky_raw_codec::CodecErrorCode::InvalidInput, format!("transform {} to {} failed.", _value_, stringify!(#enum_name))))
                 })
     }
     quote! {

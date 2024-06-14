@@ -561,7 +561,7 @@ fn decode_enum(
         match element_type.value() {
             #(#list)*
             _ => {
-                Err(CodecError::new(CodecErrorCode::NotSupport, format!("file:{} line:{} NotSupport", file!(), line!())))
+                Err(bucky_raw_codec::CodecError::new(bucky_raw_codec::CodecErrorCode::NotSupport, format!("file:{} line:{} NotSupport", file!(), line!())))
             }
         }
     })
