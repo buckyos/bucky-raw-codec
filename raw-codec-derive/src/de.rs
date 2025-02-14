@@ -224,6 +224,12 @@ fn decode_tuple(
                         if len == 0 {
                             (Vec::new(), __buf__)
                         } else {
+                            if len > u32::MAX as usize || __buf__.len() < len {
+                                return Err(CodecError::new(
+                                    CodecErrorCode::OutOfLimit,
+                                    "Vec size overflow",
+                                ));
+                            }
                             let mut bytes_buf = Vec::<u8>::with_capacity(len as usize);
                             unsafe {
                                 std::ptr::copy::<u8>(__buf__.as_ptr(),  bytes_buf.as_mut_ptr(), len as usize);
@@ -332,6 +338,12 @@ fn decode_struct(
                         if len == 0 {
                             (Vec::new(), __buf__)
                         } else {
+                            if len > u32::MAX as usize || __buf__.len() < len {
+                                return Err(CodecError::new(
+                                    CodecErrorCode::OutOfLimit,
+                                    "Vec size overflow",
+                                ));
+                            }
                             let mut bytes_buf = Vec::<u8>::with_capacity(len as usize);
                             unsafe {
                                 std::ptr::copy::<u8>(__buf__.as_ptr(),  bytes_buf.as_mut_ptr(), len as usize);
@@ -439,6 +451,12 @@ fn decode_enum(
                                         if len == 0 {
                                             (Vec::new(), __buf__)
                                         } else {
+                                            if len > u32::MAX as usize || __buf__.len() < len {
+                                                return Err(CodecError::new(
+                                                    CodecErrorCode::OutOfLimit,
+                                                    "Vec size overflow",
+                                                ));
+                                            }
                                             let mut bytes_buf = Vec::<u8>::with_capacity(len as usize);
                                             unsafe {
                                                 std::ptr::copy::<u8>(__buf__.as_ptr(),  bytes_buf.as_mut_ptr(), len as usize);
@@ -511,6 +529,12 @@ fn decode_enum(
                                             if len == 0 {
                                                 (Vec::new(), __buf__)
                                             } else {
+                                                if len > u32::MAX as usize || __buf__.len() < len {
+                                                    return Err(CodecError::new(
+                                                        CodecErrorCode::OutOfLimit,
+                                                        "Vec size overflow",
+                                                    ));
+                                                }
                                                 let mut bytes_buf = Vec::<u8>::with_capacity(len as usize);
                                                 unsafe {
                                                     std::ptr::copy::<u8>(__buf__.as_ptr(),  bytes_buf.as_mut_ptr(), len as usize);

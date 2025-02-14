@@ -754,6 +754,7 @@ macro_rules! inner_impl_empty_protobuf_raw_codec {
 #[cfg(test)]
 mod test {
     use crate::*;
+    use crate as bucky_raw_codec;
     use ::protobuf::Message;
     use std::convert::TryFrom;
 

@@ -722,12 +722,13 @@ impl<'de, T: RawEncode + RawDecode<'de>> RawDecode<'de> for Vec<T> {
         let len = ulen.value();
         let mut offset: usize = 0;
         // println!("vec len {}", len);
-        if len > u32::max_value() as usize {
+        if len > u32::max_value() as usize / 32 {
             return Err(CodecError::new(
                 CodecErrorCode::OutOfLimit,
                 "vec len overflow",
             ));
         }
+
         let mut vec = std::vec::Vec::with_capacity(len);
         for _ in 0..len {
             let (e, next) = T::raw_decode(&buf[offset..])?;
@@ -773,6 +774,12 @@ impl<'de, T: Eq + Hash + RawEncode + RawDecode<'de>> RawDecode<'de> for HashSet<
     fn raw_decode(buf: &'de [u8]) -> CodecResult<(Self, &'de [u8])> {
         let (ulen, mut buf) = USize::raw_decode(buf)?;
         let len = ulen.value();
+        if len > u32::max_value() as usize / 32 {
+            return Err(CodecError::new(
+                CodecErrorCode::OutOfLimit,
+                "vec len overflow",
+            ));
+        }
         let mut set = HashSet::with_capacity(len as usize);
         for _ in 0..len {
             let (e, _buf) = T::raw_decode(buf)?;
@@ -1399,6 +1406,18 @@ impl<'de> RawDecode<'de> for VarString {
         if len == 0 {
             Ok((VarString(String::from("")), buf))
         } else {
+            if len > u32::MAX as usize {
+                return Err(CodecError::new(
+                    CodecErrorCode::OutOfLimit,
+                    "VarString len overflow",
+                ));
+            }
+            if buf.len() < len {
+                return Err(CodecError::new(
+                    CodecErrorCode::OutOfLimit,
+                    "not enough buffer for VarString",
+                ));
+            }
             let mut bytes_buf = Vec::<u8>::with_capacity(len);
             unsafe {
                 std::ptr::copy::<u8>(buf.as_ptr(), bytes_buf.as_mut_ptr(), len as usize);
@@ -1708,6 +1727,18 @@ impl<'de, T: From<usize> + RawDecode<'de> + Into<usize>> RawDecode<'de> for Size
             ));
         }
 
+        if size > u32::MAX as usize / 8 {
+            return Err(CodecError::new(
+                CodecErrorCode::OutOfLimit,
+                "SizedOwnedData size overflow",
+            ));
+        }
+        if size > buf.len() {
+            return Err(CodecError::new(
+                CodecErrorCode::OutOfLimit,
+                "not enough buffer for SizedOwnedData",
+            ));
+        }
         let mut data = Vec::with_capacity(size);
         unsafe {
             data.set_len(size);
