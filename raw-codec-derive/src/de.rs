@@ -225,8 +225,8 @@ fn decode_tuple(
                             (Vec::new(), __buf__)
                         } else {
                             if len > u32::MAX as usize || __buf__.len() < len {
-                                return Err(CodecError::new(
-                                    CodecErrorCode::OutOfLimit,
+                                return Err(bucky_raw_codec::CodecError::new(
+                                    bucky_raw_codec::CodecErrorCode::OutOfLimit,
                                     "Vec size overflow",
                                 ));
                             }
@@ -339,8 +339,8 @@ fn decode_struct(
                             (Vec::new(), __buf__)
                         } else {
                             if len > u32::MAX as usize || __buf__.len() < len {
-                                return Err(CodecError::new(
-                                    CodecErrorCode::OutOfLimit,
+                                return Err(bucky_raw_codec::CodecError::new(
+                                    bucky_raw_codec::CodecErrorCode::OutOfLimit,
                                     "Vec size overflow",
                                 ));
                             }
@@ -452,8 +452,8 @@ fn decode_enum(
                                             (Vec::new(), __buf__)
                                         } else {
                                             if len > u32::MAX as usize || __buf__.len() < len {
-                                                return Err(CodecError::new(
-                                                    CodecErrorCode::OutOfLimit,
+                                                return Err(bucky_raw_codec::CodecError::new(
+                                                    bucky_raw_codec::CodecErrorCode::OutOfLimit,
                                                     "Vec size overflow",
                                                 ));
                                             }
@@ -530,8 +530,8 @@ fn decode_enum(
                                                 (Vec::new(), __buf__)
                                             } else {
                                                 if len > u32::MAX as usize || __buf__.len() < len {
-                                                    return Err(CodecError::new(
-                                                        CodecErrorCode::OutOfLimit,
+                                                    return Err(bucky_raw_codec::CodecError::new(
+                                                        bucky_raw_codec::CodecErrorCode::OutOfLimit,
                                                         "Vec size overflow",
                                                     ));
                                                 }
