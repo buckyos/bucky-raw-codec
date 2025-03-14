@@ -1956,11 +1956,11 @@ impl<'de> RawDecode<'de> for IpAddr {
                         "not enough buffer for IpAddr",
                     ));
                 }
-                let s = unsafe { std::slice::from_raw_parts(buf.as_ptr() as *const u16, 8) };
+
+                let mut vp_buf = [0u8; 16];
+                unsafe {std::ptr::copy(buf.as_ptr(), vp_buf.as_mut_ptr(), 16);}
                 // TOFIX: flow and scope
-                let addr = IpAddr::V6(Ipv6Addr::new(
-                    s[0], s[1], s[2], s[3], s[4], s[5], s[6], s[7],
-                ));
+                let addr = IpAddr::V6(Ipv6Addr::from(vp_buf));
                 Ok((addr, &buf[16..]))
             }
             _ => Err(CodecError::new(CodecErrorCode::NotSupport, "NotSupport")),
@@ -2304,6 +2304,7 @@ impl RawEncode for str {
 
 #[cfg(test)]
 mod raw_codec_test {
+    use std::net::{IpAddr, Ipv4Addr, Ipv6Addr};
     use crate::*;
 
     fn test_var_string_codec(v: &str) {
@@ -2487,5 +2488,14 @@ mod raw_codec_test {
         set.insert(88, s3);
 
         test_codec(&set);
+    }
+
+    #[test]
+    fn test_ip_addr() {
+        let ip = IpAddr::V4(Ipv4Addr::new(192, 168, 1, 1));
+        test_codec(&ip);
+
+        let ip = IpAddr::V6(Ipv6Addr::new(0x2001, 0xdb8, 0, 0, 0, 0, 0, 1));
+        test_codec(&ip);
     }
 }
