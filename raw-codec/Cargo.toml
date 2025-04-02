@@ -5,6 +5,7 @@ edition = "2021"
 build = "build.rs"
 license = "MIT"
 repository = "https://github.com/buckyos/bucky-raw-codec.git"
+description = "Bucky raw codec library"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
@@ -14,8 +15,8 @@ log = "0.4.21"
 primitive-types = '0.12'
 protobuf = { version = '2', features = ['with-bytes'] }
 hex = "0.4.3"
-bucky-raw-codec-derive = { path = "../raw-codec-derive", optional = true}
-bucky-error = {git = "https://github.com/buckyos/bucky-error.git", version = "0.1.0"}
+bucky-raw-codec-derive = { version = "0.1", optional = true}
+bucky-error = "0.1.0"
 
 [build-dependencies]
 protoc-rust = '2'
